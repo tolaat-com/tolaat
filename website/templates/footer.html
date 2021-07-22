@@ -1,0 +1,20 @@
+{% if netanyahu %}
+{% else %}
+    <p></p>
+    <br/>
+    <a href="{{url_for('static_blueprint.search')}}">{{h.search}}</a>
+    <a href="{{url_for('static_blueprint.about')}}">{{h.about}}</a>
+    <a href="{{url_for('static_blueprint.privacy')}}">{{h.privacy}}</a>
+    <a href="{{url_for('static_blueprint.contact')}}">{{h.contact}}</a>
+    <a href="{{url_for('static_blueprint.changelog')}}">{{h.changelog}}</a>
+    <a href="{{url_for('static_blueprint.developers')}}">{{h.developers}}</a>
+
+    <br/>
+    {% if h.key in request.args and request.args[h.key] == h.show_key %}
+        <!--KEY:{{g.key | safe}}:-->
+    {% endif %}
+
+    <div style="height: 75px">
+        &nbsp;
+    </div>
+{% endif %}

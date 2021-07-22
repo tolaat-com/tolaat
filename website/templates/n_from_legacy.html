@@ -1,0 +1,81 @@
+{% if not from_master or not from_master.api or not (from_master.api.verdicts or from_master.api.decisions)
+%}
+
+
+
+    {% if model.decisions | length > 0 %}
+        <h3>{{h.decisions}}</h3>
+        <table>
+            <tr><th>{{h.decision_date}}</th><th>{{h.decision_signer}}</th><th>{{h.decision_name}}</th></tr>
+            {% for decision in model.decisions %}
+                <tr>
+                    <td>{{ decision.date }}</td>
+                    <td>{{ decision.signer }}</td>
+                    <td>{{ decision.name}}</td>
+                    {% if bodily_harm %}
+                        <td>{{h.anonymized}}</td>
+                 {#   {% elif decision.censored %}
+                        <td>{{h.document}} {{loop.index}}</td> #}
+                    {% else %}
+                    <td><a href="{{url_for('doc_blueprint.x_document_preview', hebrew_type=hebrew_type, viewid=viewid, decisionnumber=loop.index0)}}">{{h.document}} {{loop.index}}</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+
+
+    {% elif model.sittings and model.v == 2 and not (from_master.api and from_master.api.sittings) %}
+
+        <h3>{{h.sittings}}</h3>
+        <table>
+            <tr>
+                <th>{{h.sitting_status}}</th>
+                <th>{{h.sitting_sug}}</th>
+                <th>{{h.sitting_who}}</th>
+                <th>{{h.sitting_bakasha}}</th>
+                <th>{{h.sitting_canceled}}</th>
+                <th>{{h.sitting_time}}</th>
+
+            </tr>
+            {% for sitting in model.sittings %}
+                <tr>
+                    <td>{{ sitting.status }}</td>
+                    <td>{{ sitting.sug }}</td>
+                    <td>{{ sitting.who }}</td>
+                    <td>{{ sitting.bakasha }}</td>
+                    <td>{{ sitting.canceled}}</td>
+                    <td>{{ sitting.time}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% elif model.sittings and model.v == 3 and not (from_master.api and from_master.api.sittings) %}
+        <h3>{{h.sittings}}</h3>
+        <table>
+            <tr>
+                <th>{{h.sitting3_type}}</th>
+                <th>{{h.sitting3_date}}</th>
+                <th>{{h.sitting3_start}}</th>
+                <th>{{h.sitting3_endtime}}</th>
+                <th>{{h.sitting3_has_protocol}}</th>
+                <th>{{h.sitting3_status}}</th>
+                <th>{{h.sitting3_user}}</th>
+            </tr>
+            {% for sitting in model.sittings %}
+                <tr>
+                    <td>{{sitting.SittingTypeName}}</td>
+                    <td>{{sitting.MeetingDate}}</td>
+                    <td>{{sitting.StartTime}}</td>
+                    <td>{{sitting.FinishTime}}</td>
+                    <td>{{sitting.IsProtocolExist}}</td>
+                    <td>{{sitting.SittingActivityStatusName}}</td>
+                    <td>{{sitting.UserList}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+
+{% endif %}
+
+

@@ -1,0 +1,1 @@
+docker run -p 5000:5000 --mount type=bind,source=C:\Users\andy\.aws,target=/root/.aws,readonly --env AWS_PROFILE=tolaatweb --env TOLAATCOM_MAJOR=20210715_150022 tolaatcom-web:a2

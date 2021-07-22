@@ -1,0 +1,18 @@
+{% if ugc | length > 0 %}
+
+    <h3>{{h.ugc}} <a href="{{url_for('static_blueprint.about')}}"> &#x1f6c8;</a></h3>
+    <small>{{h.ugc_beta_message}}</small>
+    <table>
+        <tr><th>{{h.ugc_pages}}</th>
+            <th>{{h.ugc_date}}</th>
+            <th>{{h.ugc_title}}</th></tr>
+        {% for ugc_item in ugc %}
+            <tr>
+                <td align="center">{{ ugc_item.pages }}</td>
+                <td>{{ ugc_item.uploaded }}</td>
+                <td>{{ ugc_item.title }}</td>
+                <td><a href="{{url_for('doc_blueprint.x_ugc_preview', hebrew_type=hebrew_type, viewid=viewid, ugcdocid=ugc_item.ugcdocid)}}">{{h.document}} {{loop.index}}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

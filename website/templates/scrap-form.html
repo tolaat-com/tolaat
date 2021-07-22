@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% include "short.html" %}
+
+<form method="POST" action="{{url_for('scrap_blueprint.scrap_form_submit')}}">
+        {{ form.csrf_token }}
+
+
+        {{form.case_type}}
+
+         <span>תיק:</span>
+    <span dir="ltr">
+        {{ form.number(size=5, placeholder='מספר') }}
+        <span>-</span>
+        {{ form.month(size=2,placeholder='חודש') }}
+        <span>-</span>
+        {{ form.year(size=2, placeholder='שנה') }}
+    </span>
+        {{ form.recaptcha }}
+        <input type="submit" value="תולעת, תגרדי לי">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<br/>
+
+<h3><a href="{{url_for('view_blueprint.x_case', hebrew_type=hebrew_type, viewid=viewid)}}">{{case_name}}</a></h3>
+
+    <h1>{{decision.DecisionName.split('|')[0]}}</h1>
+    <h2>{{decision.CourtName}}, {{decision.DecisionStatusChangeDate}}</h2>
+    {% include "short.html" %}
+
+<br/>
+
+{% if not censored %}
+    <a href="{{url_for('doc_blueprint.x_document_v2_download', hebrew_type=hebrew_type, viewid=viewid, heb_decision_type=heb_decision_type, decisionnumber=decisionnumber)}}">
+        {{h.download}}
+    </a>
+{% else %}
+    {{h.hidden_document}}
+{% endif %}
+<br/>
+
+{% if not is_mobile and not censored %}
+    <embed oncontextmenu="return false;"
+           src="{{url_for('doc_blueprint.x_document_v2', hebrew_type=hebrew_type, viewid=viewid, heb_decision_type=heb_decision_type, decisionnumber=decisionnumber)}}#toolbar=0"
+                width="750" height="500"
+     type="application/pdf">
+{% endif %}
+<br/>
+<small>{{h.doc_scraped.format(scraped)}}</small><br/>
+
+{% endblock %}

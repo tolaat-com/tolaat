@@ -1,0 +1,23 @@
+User-agent: *
+Disallow: /*תצוגה-ישירה*
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: Yandex
+Disallow: /
+
+User-Agent: bingbot
+Disallow: /
+
+User-Agent: msnbot
+Disallow: /
+
+User-agent: dotbot
+Disallow: /

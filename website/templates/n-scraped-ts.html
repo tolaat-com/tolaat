@@ -1,0 +1,34 @@
+<small>{{h.scraped.format(scraped)}}</small><br/>
+{% if from_master and from_master_ts and from_master_ts != scraped %}
+    <small>{{h.master_scraped.format(from_master_ts)}}</small>
+    <br/>
+{% endif %}
+
+{% if recompute %}
+<small>{{h.recompute.format(recompute)}}</small>
+
+{% else %}
+<small>טרם חושבו ישיויות וקשרים עבור תיק זה.</small>
+{% endif %}
+
+{% if auto_scrap and not netanyahu %}
+<p>בתיק זה ניתן להעתיק מחדש מסמכים וישיבות לבקשתך.</p>
+
+
+
+ <form method="POST" action="{{url_for('scrap_blueprint.scrap_request')}}">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        {{ form.recaptcha }}
+        <input type="submit" value="עדכן">
+    </form>
+
+
+{% elif tomorrow %}
+<p>ניתן יהיה לגרד מחדש מסמכים וישיבות רק מחר.</p>
+{% endif %}
+
+{% for m in get_flashed_messages() %}
+<span style="color: red;">{{m}}</span>
+
+{% endfor %}

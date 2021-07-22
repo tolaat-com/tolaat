@@ -1,0 +1,4 @@
+{% if current_user.is_authenticated %}
+שלום, {{ current_user.name }}
+<a href="{{url_for('logout')}}">{{h.logout}}</a>
+{% endif %}

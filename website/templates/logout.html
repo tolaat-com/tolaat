@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% if name %}
+להתראות, {{user.name}}.
+{% endif %}
+<a href="{{url_for('login')}}">כניסה</a>
+
+{% endblock %}

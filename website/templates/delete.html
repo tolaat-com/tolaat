@@ -1,0 +1,11 @@
+{% if current_user.is_authenticated %}
+    <form action="{{url_for('view_blueprint.delete')}}" method="post">
+         {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        {{ form.recaptcha }}
+
+        <button type="submit">
+            מחק תיק זה
+        </button>
+    </form>
+{% endif %}

@@ -1,0 +1,21 @@
+<span>{{h.short_url}}: <input readonly="true" id="short_url_text" type="text" value="{{short}}"></span>&nbsp;<button id="copy_short_url">{{h.copy}}</button>
+
+<script>
+
+    function set_copy_short_url()
+    {
+        if(typeof($) == 'undefined')
+        {
+            setTimeout(set_copy_short_url, 100);
+            return;
+        }
+        $("#copy_short_url").click(function()
+        {
+            $("#short_url_text").get(0).select();
+            document.execCommand('copy');
+        });
+    }
+
+    set_copy_short_url();
+
+</script>

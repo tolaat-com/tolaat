@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<br/>
+
+<h3><a href="{{url_for('view_blueprint.x_case', hebrew_type=hebrew_type, viewid=viewid)}}">{{case_name}}</a></h3>
+
+
+
+
+<h1>{{ugc.title}}</h1>
+{% include "short.html" %}
+
+<h2>{{ugc.uploaded}}</h2>
+<br/>
+{% if not netanyahu %}
+<small>{{h.ugc_beta_message}}</small>
+{% else %}
+<small>{{h.netanyahu_ugc}}</small>
+{% endif %}
+<br/>
+
+{% if not censored  %}
+    <a href="{{url_for('doc_blueprint.x_ugc_download', hebrew_type=hebrew_type, viewid=viewid, ugcdocid=ugcdocid)}}">
+        {{h.download}}
+    </a>
+{% else %}
+    {{h.hidden_document}}
+{% endif %}
+<br/>
+
+{% if not is_mobile and not censored %}
+    <embed oncontextmenu="return false;"
+           src="{{url_for('doc_blueprint.x_ugc', hebrew_type=hebrew_type, viewid=viewid, ugcdocid=ugcdocid)}}#toolbar=0"
+                width="750" height="500"
+     type="application/pdf">
+
+
+{% endif %}
+<br/>
+
+
+{% endblock %}

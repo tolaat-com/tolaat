@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+<br/>
+
+
+    <h2>{{h.entity_subtitle[type].format(name)}}</h2>
+
+
+
+{% if last_page -1 > 1 %}
+<h2>{{h.results_pages.format(page, last_page-1)}}</h2>
+    {% for p in pages %}
+        {% if p == page %}
+            {{p}}
+        {% elif p == '...' %}
+            <span>...</span>
+        {% elif p == 1 and type != 'P'%}
+            <a href="{{url_for(viewname, name=name)}}">{{p}}</a>
+        {% elif p == 1 and type == 'P' %}
+            <a href="{{url_for(viewname, name1=name1, name2=name2)}}">{{p}}</a>
+        {% elif type != 'P' %}
+            <a href="{{url_for(viewname, name=name, **{h.page: p})}}">{{p}}</a>
+        {% else %}
+            <a href="{{url_for(viewname, name1=name1, name2=name2, **{h.page: p})}}">{{p}}</a>
+        {% endif %}
+    {% endfor %}
+<br/><br/>
+{% endif %}
+<h3>{{h.cases_page.format(model.batch_size*(page-1)+1, model.batch_size*(page-1)+cases_count, model.total)}}</h3>
+
+{% for c in model.elements %}
+<a href="{{c.url}}">{{c.title}}</a>
+ <br/>
+{% endfor %}
+
+{% endblock %}

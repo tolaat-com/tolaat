@@ -1,0 +1,23 @@
+{% if ugc | length > 0 %}
+    <h3>חומרים נוספים מתוך התיק בנט המשפט.</h3>
+    <small>בתוספת נתונים שעברו כתיבה ועריכה ע"י צוות האתר.</small>
+{% endif %}
+
+<table>
+    <tr><th>{{h.ugc_pages}}</th>
+        <th>{{h.ugc_date}}</th>
+        <th>{{h.ugc_title}}</th>
+        <th>צד המסמך</th>
+        <th>תקציר</th>
+    </tr>
+    {% for ugc_item in ugc %}
+        <tr>
+            <td align="center">{{ugc_item.pages}}</td>
+            <td>{{ugc_item.date}}</td>
+            <td  {% if ugc_item.censored %} style="background-color: #F1F1F1;" {% endif %}>
+                <a href="{{url_for('doc_blueprint.x_ugc_preview', hebrew_type=hebrew_type, viewid=viewid, ugcdocid=ugc_item.ugcdocid)}}">{{ugc_item.title}}</a></td>
+            <td>{{ugc_item.who}}</td>
+            <td>{{ugc_item.summary}}</td>
+        </tr>
+    {% endfor %}
+</table>

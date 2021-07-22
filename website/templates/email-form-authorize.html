@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/he.js"></script>
+    <script src="{{url_for('static', filename='search-fax.js')}}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+<br/><br/>
+
+<h1>אישור אמייל</h1>
+
+
+
+{% for m in get_flashed_messages() %}
+<span style="color: red;">{{m}}</span>
+
+{% endfor %}
+ <form method="POST" action="{{url_for('ses_blueprint.form_submit_authorize')}}"  enctype="multipart/form-data">
+<p>יש להמתין לקבלת מייל וללחוץ על קישורת האישור בגוף המייל. </p>
+
+
+  <label>כתובת אימייל:</label>   {{ form.email()}}
+        {{ form.csrf_token }} <br/><br/>
+        {{ form.recaptcha }} <br/><br/>
+
+        <input type="submit" value="כן, לחצתי על הקישורית">
+
+
+  </form>
+
+
+{% endblock %}

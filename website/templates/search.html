@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/he.js"></script>
+    <script src="{{url_for('static', filename='search.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<h2>חיפוש בתולעת המשפט</h2>
+
+<h4>חיפוש חופשי (באמצעות גוגל):</h4>
+<script async src="https://cse.google.com/cse.js?cx=015995906965540643652:koi07alzfmb"></script>
+<div class="gcse-search"></div>
+<h4>חיפוש שם תיק:</h4>
+
+<select id="select-case" class="js-example-basic-single" style="width: 75%">
+</select>
+<h4>חיפוש בעל/ת דין:</h4>
+
+<select id="select-S" class="js-example-basic-single"  style="width: 75%">
+</select>
+<h4>חיפוש עורך/ת דין:</h4>
+
+<select id="select-L" class="js-example-basic-single"   style="width: 75%">
+</select>
+<h4>חיפוש שופט/ת:</h4>
+
+<select id="select-J" class="js-example-basic-single"  style="width: 75%">
+</select>
+
+
+{% endblock %}

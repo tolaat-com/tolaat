@@ -1,0 +1,76 @@
+{% if from_master %}
+<div style="background: #F5FFFA">
+
+
+ {% if from_master.api and from_master.api.verdicts %}
+    <h3>פסקי דין</h3>
+     <table>
+        <tr>
+            <th>תאריך</th>
+            <th>תיאור</th>
+            <th>בית משפט</th>
+            <th>מס' עמודים</th>
+        </tr>
+    {% for verdict in from_master.api.verdicts%}
+        <tr>
+            <td>{{verdict.DecisionStatusChangeDate}}</td>
+            <td>{{verdict.DecisionName.split('|')[0]}}</td>
+            <td>{{verdict.CourtName}}</td>
+            <td><a href="{{url_for('doc_blueprint.x_document_preview_v2',hebrew_type=hebrew_type, viewid=viewid, doctype=h.verdict_url, decisionnumber=loop.index)}}">{{verdict.pages}}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+{% if from_master.api and from_master.api.decisions %}
+<h3>החלטות</h3>
+    <table>
+        <tr>
+            <th>תאריך</th>
+            <th>תיאור</th>
+            <th>בית משפט</th>
+            <th>מס' עמודים</th>
+        </tr>
+    {% for decision in from_master.api.decisions%}
+        <tr>
+            <td>{{decision.DecisionStatusChangeDate}}</td>
+            <td>{{decision.DecisionName.split('|')[0]}}</td>
+            <td>{{decision.CourtName}}</td>
+            <td><a href="{{url_for('doc_blueprint.x_document_preview_v2',hebrew_type=hebrew_type, viewid=viewid, doctype=h.decision, decisionnumber=loop.index)}}">{{decision.pages}}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+
+{% if from_master.api and from_master.api.sittings %}
+    <h3>{{h.sittings}}</h3>
+
+    <table>
+            <tr>
+                <th>בית משפט</th>
+                <th>תאריך</th>
+                <th>התחלה</th>
+                <th>סיום</th>
+                <th>סוג</th>
+                <th>גורם שיפוטי</th>
+                <th>מצב</th>
+
+            </tr>
+            {% for sitting in from_master.api.sittings %}
+
+            <tr>
+                    <td>{{sitting.CourtName }}</td>
+                    <td>{{sitting.MeetingDate }}</td>
+                    <td>{{sitting.StartTime}}</td>
+                    <td>{{sitting.FinishTime}}</td>
+                    <td>{{sitting.SittingTypeName}}</td>
+                    <td>{{sitting.DisplayName}}</td>
+                    <td>{{sitting.SittingActivityStatusName}}</td>
+            </tr>
+            {% endfor %}
+    </table>
+{% endif %}
+
+
+</div>
+
+{% endif %}

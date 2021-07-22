@@ -1,0 +1,18 @@
+boto3==1.9.81
+cryptography==2.7
+Flask==1.0.2
+Flask-Login==0.5.0
+Flask-WTF==0.14.3
+PyPDF2==1.26.0
+python-dateutil==2.6.1
+python-slugify==1.2.4
+pytz==2020.5
+requests==2.21.0
+tolaatcom-nhc==0.0.11
+WTForms==2.3.1
+zappa==0.47.1
+python-dotenv==0.18.0
+#should not be needed but zappa
+#only works with this version
+#of troposhpere
+troposphere==2.7.0

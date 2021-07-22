@@ -1,0 +1,121 @@
+{
+  "tolaat1": {
+    "app_function": "zappa_entry.app",
+    "aws_region": "eu-central-1",
+    "profile_name": "frankfurt",
+    "project_name": "website",
+    "runtime": "python3.6",
+    "keep_warm": false,
+    "apigateway_policy": "website/gateway-policy.json",
+    "manage_roles": false,
+    "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
+    "lambda_description": "tolaatcom",
+    "log_level": "INFO",
+    "domain": "xn----8hcborozt8bdd.xn--9dbq2a",
+    "certificate_arn": "arn:aws:acm:us-east-1:175267656368:certificate/b4347bfe-be83-4107-85c0-be8721a8a89b",
+    "s3_bucket": "zappa-3ualeocg2"
+  },
+  "stage": {
+    "app_function": "zappa_entry.app",
+    "aws_region": "eu-central-1",
+    "profile_name": "frankfurt",
+    "project_name": "website",
+    "runtime": "python3.6",
+    "keep_warm": false,
+    "manage_roles": false,
+    "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
+    "lambda_description": "tolaatcom test",
+    "log_level": "INFO",
+    "s3_bucket": "zappa-3ualeocg2"
+  },
+  "beta": {
+    "app_function": "zappa_entry.app",
+    "domain": "xn--5dbq5c.xn----8hcborozt8bdd.xn--9dbq2a",
+    "certificate_arn": "arn:aws:acm:us-east-1:175267656368:certificate/b4347bfe-be83-4107-85c0-be8721a8a89b",
+    "aws_region": "eu-central-1",
+    "profile_name": "frankfurt",
+    "project_name": "website",
+    "runtime": "python3.6",
+    "keep_warm": false,
+    "manage_roles": false,
+    "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
+    "lambda_description": "tolaatcom beta",
+    "log_level": "INFO",
+    "s3_bucket": "zappa-3ualeocg2"
+  },
+  "short": {
+    "app_function": "zappa_entry_short.app",
+    "aws_region": "eu-central-1",
+    "profile_name": "frankfurt",
+    "project_name": "website",
+    "keep_warm": false,
+    "lambda_description": "tolaatcom short",
+    "runtime": "python3.6",
+    "domain": "tl8.me",
+    "certificate_arn": "arn:aws:acm:us-east-1:175267656368:certificate/c992a0fd-71df-4e1b-b778-1aa8e21cf97d",
+    "s3_bucket": "zappa-3ualeocg2"
+  },
+
+  "netanyahu": {
+    "app_function": "zappa_entry.app",
+    "aws_region": "eu-central-1",
+    "profile_name": "frankfurt",
+    "project_name": "website",
+    "keep_warm": false,
+    "lambda_description": "tolaatcom netanyahu",
+    "runtime": "python3.6",
+    "s3_bucket": "zappa-3ualeocg2",
+    "domain": "xn----8hcdjg1aqa6a1cp.xn--9dbq2a",
+    "certificate_arn": "arn:aws:acm:us-east-1:175267656368:certificate/f4d90d3f-380c-4cb9-a932-988dac29a06a",
+    "aws_environment_variables": {
+      "netanyahu": "true"
+    }
+  },
+   "changes": {
+    "app_function": "zappa_entry_changes.app",
+    "aws_region": "eu-central-1",
+    "profile_name": "frankfurt",
+    "project_name": "website",
+    "keep_warm": false,
+    "lambda_description": "tolaatcom changes",
+    "manage_roles": false,
+    "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
+    "runtime": "python3.6",
+      "events": [
+      {
+        "function": "changes.new_change_event",
+        "event_source": {
+          "arn": "arn:aws:dynamodb:eu-central-1:175267656368:table/master_table/stream/2021-01-30T17:19:52.174",
+          "events": ["*"],
+          "starting_position": "TRIM_HORIZON",
+          "batch_size": 50,
+          "enabled": true
+      }
+      }
+    ],
+    "s3_bucket": "zappa-3ualeocg2"
+  },
+  "incoming_email": {
+    "app_function": "zappa_entry_incoming_email.app",
+    "aws_region": "us-east-1",
+    "profile_name": "frankfurt",
+    "project_name": "incoming_email",
+    "keep_warm": false,
+    "lambda_description": "tolaatcom incoming email",
+    "runtime": "python3.6",
+    "s3_bucket": "zappa-3ualeocg2-us-east-1",
+    "events": [
+      {
+        "function": "incoming_email.new_s3_file",
+        "event_source": {
+          "arn": "arn:aws:s3:::ses-incoming-xwehyvyd",
+          "events": [
+            "s3:ObjectCreated:*"
+          ]
+        }
+      }
+    ]
+  }
+}
+
+

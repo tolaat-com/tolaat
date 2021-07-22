@@ -1,0 +1,1 @@
+zappa update tolaat1 & zappa update netanyahu & zappa update short

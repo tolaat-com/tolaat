@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h1>{{h.website_name}}</h1>
+
+
+{% include "toggle.html" %}
+
+<h2>{{status}}: {{response}}</h2>
+<p>תוכן הוסר</p>
+
+{% endblock %}

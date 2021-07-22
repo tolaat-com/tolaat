@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/he.js"></script>
+    <script src="{{url_for('static', filename='search-fax.js')}}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+<h1>פקס חינם לבית המשפט</h1>
+
+{% include "short-nojquery.html" %}<br/><br/>
+
+{% for m in get_flashed_messages() %}
+<span style="color: red;">{{m}}</span>
+
+{% endfor %}
+ <form method="POST" action="{{url_for('fax_blueprint.form_submit')}}"  enctype="multipart/form-data">
+
+<span>מספר יעד:</span>
+<select id="select-court" name="faxnumber" class="js-example-basic-single" style="width: 45%">
+
+    {% for item in directory %}
+        <option value="{{loop.index0}}">{{item.court}} - {{item.section}} ({{item.fax1}})</option>
+    {% endfor %}
+
+</select>
+     <br/><br/>
+
+<span>קובץ פקס (PDF בלבד):</span>
+     {{ form.fax()}}
+        {{ form.csrf_token }} <br/><br/>
+<span>קראתי את תנאי השימוש ואני מסכים:</span>     {{ form.agree }} <br/><br/>
+        {{ form.recaptcha }} <br/><br/>
+
+        <input type="submit" value="מעבר למסך שליחה">
+
+
+<h3>תנאי השימוש לשירות "פקס חינם לבית המשפט".</h3>
+<p>השירות פקס חינם לבית המשפט נועד לקדם את העיקרון של גישה לערכאות.
+<p>השימוש מיועד לשליחת כתבי טענות ובקשות בהליכים משפטיים.</p>
+<p>המשתמש מתחייב לכלול פרטים מזהים ודרכי קשר מלאים ונכונים בגוף כל מסמך שישלח.</p>
+<p>הפקסים נשלחים מיד ולא עוברים עריכה או סינון על ידי תולעת המשפט.</p>
+<p>הפקסים מבוקרים על מנת להבטיח את איכות וזמינות השירות.</p>
+<p>הפקסים מוגבלים לקבצי PDF של עד 4 עמודים.</p>
+<p>המערכת שומרת את כתובת ה-IP של השולח ובמקרה של חשש לשימוש לרעה, ייתכן וכתובת ה-IP תימסר למקבל הפקס ע"פ דרישה.</p>
+<p>המערכת לא מנפיקה "מסמך אישור שליחה". אחרי השליחה, אפשר לצפות בהודעת אישור "נשלח בהצלחה" המעידה על שליחת הפקס.</p>
+<p>הפקסים והמידע עליהם, לרבות הדף של אישור השליחה, נמחקים אחרי 30 יום.</p>
+<p>המשתמש מבין כי השירות אינו מהווה המלצה או עידוד לפנות לבית המשפט והמשתמש מקבל על עצמו את מלוא האחריות על שליחת הפקס ועל תוכנו.</p>
+<p>למען הסר ספק הפקסים לא מתפרסמים באתר או בשום מקום אחר.</p>
+  </form>
+
+
+{% endblock %}

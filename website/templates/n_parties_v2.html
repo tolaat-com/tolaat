@@ -1,0 +1,38 @@
+{% if model.parties_v2 %}
+    <h3>{{h.parties}}</h3>
+    <table>
+        <tr><th>{{h.party_role}}</th><th>{{h.party_name}}</th><th>{{h.party_repr}}</th></tr>
+        {% for party in model.parties_v2 %}
+            <tr>
+                <td>{{ party.RoleName }}</td>
+                {% if satellite.S and party.FullName in satellite.S and not party.anon%}
+                    <td><a href="{{url_for('view_blueprint.side', name=party.name)}}" title="{{h.appears.format(party.FullName, satellite.S.pop(party.FullName))}}">
+                                {{party.FullName}}
+                        </a></td>
+                {% elif party.anon %}
+                    {%if party.anon.reason == 'censored' %}
+                         <td>{{h.censored}}</td>
+                    {%elif party.anon.reason == 'bodily_harm' %}
+                         <td>{{h.anonymized}}</td>
+                    {%elif party.anon.reason == 'unfit' %}
+                        <td>{{h.unfit}}</td>
+                    {% else %}
+                        <td>???</td>
+                    {% endif %}
+                {% else %}
+                        <td>{{party.name}}</td>
+                {% endif %}
+                <td>
+                    {% for lawyer in party.represented_by %}
+                        {% if satellite.L and lawyer in satellite.L %}
+                    <a href="{{url_for('view_blueprint.lawyer', name=lawyer)}}" title="{{h.lawyer_appears.format(lawyer, satellite.L.pop(lawyer))}}">{{lawyer}}</a>
+                        {% else %}
+                            {{lawyer}}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endif %}

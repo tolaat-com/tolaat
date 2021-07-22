@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h3><a href="{{url_for('static_blueprint.search')}}">{{h.search}}</a></h3>
+    <h2>{{case.CaseDisplayIdentifier}} {{case.CaseName}}</h2>
+{% include "short.html" %}
+
+<table>
+    <tr>
+        <th align="right">{{h.court}}</th>
+        <td>{{case.CourtName}}</td>
+    </tr>
+    <tr>
+        <th align="right">{{h.proceedingName}}</th>
+        <td>{{case.ProceedingName}}</td>
+    </tr>
+    <tr>
+        <th align="right">{{h.sug}}</th>
+        <td>{{case.CaseTypeName}}</td>
+    </tr>
+     <tr>
+        <th align="right">{{h.inian}}</th>
+        <td>{{case.CaseInterestName}}</td>
+    </tr>
+
+</table>
+
+{% if case.verdicts | length > 0 %}
+<h3>{{h.verdicts}}</h3>
+<table>
+    <tr><th>{{h.decision_date}}</th><th>{{h.decision_name}}</th></tr>
+    {% for decision in case.verdicts[::-1] %}
+        <tr>
+            <td>{{ decision.DecisionStatusChangeDate }}</td>
+            <td>{{ decision.DecisionName.split('|')[0]}}</td>
+            <td>
+            <a
+                href="{{url_for('preview_blueprint.original_copy_document', hebrew_type=hebrew_type, viewid=viewid, hebrew_document_type=h.preview_verdict, number=loop.index0)}}"
+                >{{h.preview_original}}</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% if case.decisions | length > 0 %}
+<h3>{{h.decisions}}</h3>
+<table>
+    <tr><th>{{h.decision_date}}</th><th>{{h.decision_name}}</th></tr>
+    {% for decision in case.decisions[::-1] %}
+        <tr>
+            <td>{{ decision.DecisionStatusChangeDate }}</td>
+            <td>{{ decision.DecisionName.split('|')[0]}}</td>
+   <td>
+            <a
+                href="{{url_for('preview_blueprint.original_copy_document', hebrew_type=hebrew_type, viewid=viewid, hebrew_document_type=h.preview_decision, number=loop.index0)}}"
+                >{{h.preview_original}}</a>
+            </td>        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+{% if case.sittings | length > 0 %}
+<h3>{{h.sittings}}</h3>
+<table>
+     <tr>
+        <th>{{h.sitting3_type}}</th>
+        <th>{{h.sitting3_date}}</th>
+        <th>{{h.sitting3_start}}</th>
+        <th>{{h.sitting3_endtime}}</th>
+        <th>{{h.sitting3_has_protocol}}</th>
+        <th>{{h.sitting3_status}}</th>
+        <th>{{h.sitting3_user}}</th>
+    </tr>
+
+    {% for sitting in case.sittings %}
+        <tr>
+                <td>{{sitting.SittingTypeName}}</td>
+                <td>{{sitting.MeetingDate}}</td>
+                <td>{{sitting.StartTime}}</td>
+                <td>{{sitting.FinishTime}}</td>
+                <td>{{sitting.IsProtocolExist}}</td>
+                <td>{{sitting.SittingActivityStatusName}}</td>
+                <td>{{sitting.DisplayName}}</td>
+            </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+</table>
+
+
+
+
+
+<br/>
+<small>{{h.preview_scrapped_just_now}}</small>
+
+
+{% endblock %}

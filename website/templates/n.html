@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% if netanyahu %}
+    <h4>משפט נתניהו הוא פרוייקט של <a href="https://xn----8hcborozt8bdd.xn--9dbq2a/">תולעת המשפט</a>, בשיתוף אתר <a href="https://www.the7eye.org.il/">העין השביעית<a/>.</h4>
+{% else %}
+    <h3>תולעת המשפט <a href="{{url_for('static_blueprint.search')}}">{{h.search}}</a></h3>
+{% endif %}
+    <h2>{{model.casename}}</h2>
+{% include "delete.html" %}
+
+{% include "short.html" %}
+<table>
+    <tr>
+        <td colspan="2">
+        <table>
+            <tr>
+                 <th>{{h.judge}}</th>
+                 <td>
+                    {% if satellite.J and model.judge.strip() in satellite.J %}
+                        <a title="{{h.judge_appears.format(model.judge, satellite.J[model.judge])}}"
+                               href="{{url_for('view_blueprint.judge', name=model.judge.strip())}}">
+                            {{model.judge}}
+                        </a>
+                    {% else %}
+                        {{model.judge}}
+                    {% endif %}
+                 </td>
+                <th>{{h.court}}</th>
+                <td>{{model.courtID}}</td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <table>
+                <tr>
+                    <th>{{h.status}}</th>
+                    <td>{{model.caseStatusID}}</td>
+                    <th>{{h.verdictResultName}}</th>
+                    <td>{{model.verdictResultName}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <table>
+                <tr>
+                    <th>{{h.sug}}</th>
+                    <td>{{model.caseTypeID}}</td>
+                    {% if model.inian %}
+                        <th>{{h.inian}}</th>
+                        <td>{{model.inian}}</td>
+                    {% endif %}
+
+                     {% if model.claimAmount and model.claimAmount != "0.00"%}
+                        <th>{{h.claimAmount}}</th>
+                        <td>{{model.claimAmount}}</td>
+                    {% endif %}
+                     {% if model.caseTypeUC_actionsum and model.caseTypeUC_actionsum != "0.00"%}
+                        <th>{{h.actionSum}}</th>
+                        <td>{{model.caseTypeUC_actionsum}}</td>
+                    {% endif %}
+                </tr>
+            </table>
+        </td>
+        </tr>
+
+         {% if model.caseTypeDesc %}
+        <tr>
+            <td>
+            <table>
+                <tr>
+                     <th>{{h.caseTypeDesc}}</th>
+                     <td colspan="2">{{model.caseTypeDesc}}</td>
+                </tr>
+            </table>
+            </td>
+        </tr>
+        {% endif %}
+
+
+
+
+
+     <tr>
+         <td colspan="2">
+             <table>
+                 <tr>
+                     {% if model.acceptanceDate %}
+                        <th>{{h.dateOpen}}</th><td>{{model.acceptanceDate.split()[0]}}</td>
+                     {% endif %}
+                     {% if model.caseStatusStartDate %}
+                        <th>{{h.dateClose}}</th><td>{{model.caseStatusStartDate}}</td>
+                     {% endif %}
+                 </tr>
+             </table>
+         </td>
+     </tr>
+</table>
+
+{%if tik_plili and seifei_ishum %}
+<h3>סעיפי אישום</h3>
+<p>{{seifei_ishum}}</p>
+{% endif %}
+
+{% if model.censorship_message %}
+<h5>{{h.gag_order}}</h5>
+<p>{{model.censorship_message}}</p>
+{% endif %}
+
+
+{% include "n_parties.html" %}
+{% include "n_parties_v2.html" %}
+
+{% include "n_from_master.html" %}
+{% include "n_from_legacy.html" %}
+
+
+
+
+
+{% if netanyahu %}
+    {% include 'ugc_netanyahu.html' %}
+{% else %}
+    {% include 'ugc.html' %}
+{% endif %}
+
+
+{% if model.kitvei_teanot | length > 0 %}
+<h3>{{h.kitvei_teanot}}</h3>
+<table>
+    <tr><th>{{h.kitvei_teanot_date}}</th><th>{{h.kitvei_teanot_name}}</th></tr>
+    {% for kt in model.kitvei_teanot %}
+        <tr>
+            <td>{{ kt.date }}</td>
+            <td>{{ kt.name }}</td>
+            <td><a href="{{url_for('doc_blueprint.n_kitvei_teanot_preview', hebrew_type=hebrew_type, viewid=viewid, decisionnumber=loop.index0)}}">{{h.document}} {{loop.index}}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+
+
+{% if model.linked_cases %}
+    <h3>{{h.linked_cases}}</h3>
+    <table>
+        <tr>
+            <th>{{h.linked_case_status}}</th>
+        {#  <th>{{h.linked_case_inian}}</th> #}
+            <th>{{h.linked_case_court}}</th>
+            <th>{{h.linked_case_name}}</th>
+            <th>{{h.linked_case_number}}</th>
+            <th>{{h.linked_case_relation}}</th>
+            <th></th>
+
+        </tr>
+        {% for linked_case in model.linked_cases %}
+            <tr>
+                <td>{{linked_case.CaseStatusName or ''}}</td>
+          {#    <td>{{linked_case.CaseInterestName or ''}}</td>  #}
+                <td>{{linked_case.CourtName or ''}}</td>
+                <td>{{linked_case.CaseTypeShortName or ''}}</td>
+                <td>{{linked_case.CaseDisplayIdentifier or ''}}</td>
+                <td>
+                {% if linked_case.url and False %}
+                    <a href="{{linked_case.url}}">{{linked_case.CaseLinkTypeName or ''}}</a>
+                {% else %}
+                    {{linked_case.CaseLinkTypeName or ''}}
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% if satellite.P %}
+    <h3>{{h.pairs}}</h3>
+    <table>
+    {% for k, v in satellite.P.items() %}
+    <tr>
+        <td>{{h.pair_and.format(k.split('|')[0],k.split('|')[1])}}</td>
+        <td><a href="{{url_for('view_blueprint.pair', name1=k.split('|')[0].replace('/', '%2F'),name2=k.split('|')[1].replace('/','%2F'))}}">
+                {{h.num_of_cases.format(v)}}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+<br/>
+
+{% include "n-scraped-ts.html" %}
+
+
+
+{% if body_harm %}
+    <br/>
+    <a href="{{url_for('static_blueprint.bodily_harm_v')}}">{{h.missing_info}}</a>
+{% endif %}
+
+{% endblock %}

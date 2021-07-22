@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<table>
+    <h4>{{h.supreme_court_case}}</h4>
+    <h2>{{model.case.CaseNum}} {{model.case.CaseDesc or ''}}</h2>
+
+    <tr>
+        <td>{{h.dateOpen}}</td>
+        <td>{{model.case.CaseDt}}</td>
+    </tr>
+    {% if model.metadata.confidential == True %}
+    <tr>
+        <td>{{h.confidential}}</td>
+        <td>{{h.yes}}</td>
+    </tr>
+    {% endif %}
+
+</table>
+
+{% if model.metadata.parties | length > 0 %}
+<h3>{{h.parties}}</h3>
+<table>
+    <tr><th>{{h.party_role}}</th><th>{{h.party_name}}</th><th>{{h.party_repr}}</th></tr>
+    {% for party in model.metadata.parties %}
+        <tr>
+            <td>{{ party.role }}</td>
+            {% if party.name in extra.onesies %}
+                    <td><a href="" title="{{h.appears.format(party.name, extra.onesies[party.name])}}">
+                            {{party.name}}
+                        </a></td>
+            {% else %}
+                    <td>{{party.name}}</td>
+            {% endif %}
+
+            {% if party.represented_by in extra.onesies %}
+                    <td>
+                        <a href="" title="{{h.appears.format(party.represented_by, extra.onesies[party.represented_by])}}">
+                            {{party.represented_by}}
+                        </a></td>
+            {% else %}
+                    <td>{{party.represented_by}}</td>
+            {% endif %}
+
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% if model.decisions | length > 0 %}
+<h3>{{h.decisions}}</h3>
+<table>
+    <tr><th>{{h.decision_date}}</th><th>{{h.decision_type}}</th><th>{{h.decision_pages}}</th></tr>
+    {% for d in model.decisions %}
+        <tr>
+            <td>{{ d.VerdictsDtString }}</td>
+            <td>{{ d.Type}}</td>
+            <td>{{d.Pages}}</td>
+            <td><a href="{{url_for('document', viewname=viewname, viewid=viewid, decisionnumber=loop.index0)}}">{{h.document}} {{loop.index}}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<h6>
+<a style="color:inherit;text-decoration:inherit"
+       href="https://supreme.court.gov.il/Pages/SearchJudgments.aspx?&OpenYearDate={{model.case.CaseDt.split('/')[-1]}}&CaseNumber={{viewid.split('-')[0]}}"
+            target="_blank">{{h.view_official_site}}</a></h6>
+
+
+{% endblock %}

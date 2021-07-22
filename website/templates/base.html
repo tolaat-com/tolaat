@@ -1,0 +1,60 @@
+<html>
+<head>
+    {% include "google-tag-manager-head.html" %}
+    {% include "google-analytics.html" %}
+    <title>{{subtitle}} {{h.website_name}} </title>
+    <meta name="description" content="{{h.website_description}}">
+    <meta property="og:title" content="{{h.websitename}}" />
+    <meta property="og:url" content="{{og_url or short}}" />
+    <meta property="og:image" content="{{url_for('static',filename='images/stamp-tight.png', _external=True)}}" />
+    <meta property="og:image:height" content="869" />
+    <meta property="og:image:width" content="921" />
+
+    <meta property="og:description" content="{{og_description}}" />
+    {% if is_mobile %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {font-size: 24px; line-height: 1.5em;}
+        </style>
+    {% endif %}
+
+    <meta property="og:locale" content="he_IL" />
+    <link rel="shortcut icon" type="image/png" href="{{url_for('static', filename='images/favicon-32x32.png')}}">
+    <link rel="shortcut icon" sizes="32x32" href="{{url_for('static',filename='images/favicon-32x32.png')}}">
+    <link rel="apple-touch-icon" href="{{url_for('static',filename='images/favicon-32x32.png')}}">
+    <meta property="og:type" content="website" />
+
+    {% if not is_google_bot and not netanyahu %}
+    <script src="https://www.google.com/recaptcha/api.js?render=6LepgcYUAAAAAFQwyqA654oxrkM0BHhMbI5c1jHB"></script>
+    {% endif %}
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body dir="rtl">
+{% include "google-tag-manager-body.html" %}
+{% include "current_user.html" %}
+<span style="display: none" id="config_rootpath">{{url_for("view_blueprint.main")}}</span>
+
+
+{% block body %}
+{% endblock %}
+
+{% include "footer.html" %}
+</body>
+{% if not is_google_bot and not netanyahu %}
+<script>
+
+    function grecaptcha_load(callback)
+    {
+        grecaptcha.execute('6LepgcYUAAAAAFQwyqA654oxrkM0BHhMbI5c1jHB', {action: 'all'}).then(function(token) {
+           console.log('token2 is '+token);
+           callback && callback(token);
+        });
+    }
+    grecaptcha.ready(grecaptcha_load);
+
+</script>
+{% endif %}
+<!--data_version: {{data_version}} -->
+</html>
