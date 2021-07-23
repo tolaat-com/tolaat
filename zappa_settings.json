@@ -1,5 +1,5 @@
 {
-  "tolaat1": {
+  "tolaat_v2": {
     "app_function": "zappa_entry.app",
     "aws_region": "eu-central-1",
     "profile_name": "frankfurt",
@@ -9,10 +9,8 @@
     "apigateway_policy": "website/gateway-policy.json",
     "manage_roles": false,
     "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
-    "lambda_description": "tolaatcom",
+    "lambda_description": "tolaat_v2",
     "log_level": "INFO",
-    "domain": "xn----8hcborozt8bdd.xn--9dbq2a",
-    "certificate_arn": "arn:aws:acm:us-east-1:175267656368:certificate/b4347bfe-be83-4107-85c0-be8721a8a89b",
     "s3_bucket": "zappa-3ualeocg2"
   },
   "stage": {
@@ -25,21 +23,6 @@
     "manage_roles": false,
     "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
     "lambda_description": "tolaatcom test",
-    "log_level": "INFO",
-    "s3_bucket": "zappa-3ualeocg2"
-  },
-  "beta": {
-    "app_function": "zappa_entry.app",
-    "domain": "xn--5dbq5c.xn----8hcborozt8bdd.xn--9dbq2a",
-    "certificate_arn": "arn:aws:acm:us-east-1:175267656368:certificate/b4347bfe-be83-4107-85c0-be8721a8a89b",
-    "aws_region": "eu-central-1",
-    "profile_name": "frankfurt",
-    "project_name": "website",
-    "runtime": "python3.6",
-    "keep_warm": false,
-    "manage_roles": false,
-    "role_arn": "arn:aws:iam::175267656368:role/website-tolaat1-ZappaLambdaExecutionRole",
-    "lambda_description": "tolaatcom beta",
     "log_level": "INFO",
     "s3_bucket": "zappa-3ualeocg2"
   },
